@@ -25,6 +25,22 @@
  }
  window.N1Usage={calculation:()=>track('calculation')};
  track('open');
+ if (navigator.onLine !== false) {
+  const fleetVisitorKey = 'acmx-reference-visitor-v1';
+  let visitor = device;
+  try {
+   const saved = localStorage.getItem(fleetVisitorKey);
+   if (saved && saved.length >= 10 && saved.length <= 100) visitor = saved;
+   else localStorage.setItem(fleetVisitorKey, visitor);
+  } catch {}
+  void fetch('https://aircraft-reference-usage.wgy9sy6b59.workers.dev/event', {
+   method: 'POST',
+   headers: {'Content-Type': 'application/json'},
+   body: JSON.stringify({event: 'vibe', aircraft: 'b767', visitor, eventId: crypto.randomUUID()}),
+   credentials: 'omit',
+   keepalive: true
+  }).catch(() => {});
+ }
  setInterval(()=>{if(document.visibilityState==='visible')void flush();},30000);
  addEventListener('online',()=>void flush());
  document.addEventListener('visibilitychange',()=>void flush());
