@@ -1,5 +1,5 @@
 const PREFIX='n1-balance-'+self.registration.scope;
-const CACHE=PREFIX+'v8-fullscreen-wallpaper';
+const CACHE=PREFIX+'v9-readable-text';
 const ASSETS=['./','./index.html','./aircraft-wallpaper.webp','./style.css','./solver.js','./usage.js','./app.js','./manifest.webmanifest','./767-vibe-icon-r2-180.png','./767-vibe-icon-r2-192.png','./767-vibe-icon-r2-512.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith(PREFIX)&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
